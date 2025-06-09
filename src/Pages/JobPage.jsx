@@ -1,38 +1,56 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { useParams, useLoaderData } from 'react-router-dom'
+import { useParams, useLoaderData, useNavigate } from 'react-router-dom'
 import Spinners from '../Components/Spinners'
 import { Link } from 'react-router-dom'
 import { FaArrowLeft, FaMapMarker } from 'react-icons/fa'
+import { toast } from 'react-toastify'
 
 
-const JobPage = () => {
+const JobPage = ({deleteJob}) => {
   const {id} =useParams()
   const job = useLoaderData()
+  const navigate = useNavigate()
+
+  {/**
+    Using useFetch hook to update to update state 
+    const [job, setJob] = useState(null)
 
 
-  // const [job, setJob] = useState(null)
-  // const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true)
 
-  // useEffect(() => {
-  //   const fetchJob = async () => {
-  //     try {
-  //       const res = await fetch(`/api/jobs/${id}`)
-  //       const data = await res.json()
-  //       setJob(data)
-  //       console.log(data)
-  //     } catch (error) {
-  //       console.log('Error fetching data', error)
-  //     } finally{
-  //       setLoading(false)
-  //     }
-  //   }
+  useEffect(() => {
+    const fetchJob = async () => {
+      try {
+        const res = await fetch(`/api/jobs/${id}`)
+        const data = await res.json()
+        setJob(data)
+        console.log(data)
+      } catch (error) {
+        console.log('Error fetching data', error)
+      } finally{
+        setLoading(false)
+      }
+    }
 
-  //   fetchJob()
-  // }, []) 
+    fetchJob()
+  }, []) 
 
-  // Or Using React Routers data loaders
+  Or Using React Routers data loaders
+    */}
 
+    //Deleting a job Posting
+    const onDeleteClick = (jobId) => {
+      const confirm = window.confirm("Are you sure you want to delete this listing")
+
+      if (!confirm) return
+
+      deleteJob(jobId)
+
+      toast.success("Job deleted successfully")
+
+      navigate("/jobs")
+    }
 
   return (
     <>
