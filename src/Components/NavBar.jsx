@@ -19,7 +19,7 @@ const NavBar = () => {
             >
               <img src={Logo} alt="React Jobs" className="h-10 w-auto" />
               <span className="hidden md:block text-white text-2xl ml-2 font-bold">
-                React Jobs
+                TechLaunchpad
               </span>
             </NavLink>
 
@@ -32,16 +32,16 @@ const NavBar = () => {
                   Home
                 </NavLink>
                 <NavLink
-                  to="/jobs"
+                  to="/internships"
                   className= {linkClass}
                 >
-                  Jobs
+                  Internships
                 </NavLink>
                 <NavLink
-                  to="/add-job"
+                  to="/add-internship"
                   className= {linkClass}
                 >
-                  Add Jobs
+                  Add Internships
                 </NavLink>
               </div>
             </div>

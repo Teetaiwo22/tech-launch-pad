@@ -14,4 +14,4 @@ const Spinners = ({loading}) => {
   )
 }
 
-export default Spinners
+export default Spinners 

@@ -1,61 +1,67 @@
 import React from "react";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const AddJobPage = ({addJobSubmit}) => {
-  const [title, setTitle] = useState("");
-  const [type, setType] = useState("Full-Time");
-  const [location, setLocation] = useState("");
-  const [description, setDescription] = useState("");
-  const [salary, setSalary] = useState("Under $50K");
-  const [companyName, setCompanyName] = useState("");
-  const [companyDescription, setCompanyDescription] = useState("");
-  const [contactEmail, setContactEmail] = useState("");
-  const [contactPhone, setContactPhone] = useState("");
+const EditInternshipPage = ({updateInternshipSubmit}) => {
+  const internship = useLoaderData(); // used in place useFetch hook
 
-  const navigate = useNavigate();
+  const [title, setTitle] = useState(internship.title);
+  const [type, setType] = useState(internship.type);
+  const [location, setLocation] = useState(internship.location);
+  const [description, setDescription] = useState(internship.description);
+  const [salary, setSalary] = useState(internship.salary);
+  const [companyName, setCompanyName] = useState(internship.company.name);
+  const [companyDescription, setCompanyDescription] = useState(internship.company.description);
+  const [contactEmail, setContactEmail] = useState(internship.company.contactEmail);
+  const [contactPhone, setContactPhone] = useState(internship.company.contactPhone);
+
+    const navigate = useNavigate()
+
+    const { id } = useParams()
 
   const submitForm = (e) => {
-    e.preventDefault();
-
-    {/**POST Request
-      construting object from the form field to be submitted to our API or backend
-      Need to match it up with the way the API is structured..e.g from the company object */}
-    const newJob = {
-      title,
-      type,
-      location,
-      description,
-      salary,
-      company: {
-        name: companyName,
-        description: companyDescription,
-        contactEmail,
-        contactPhone,
-      },
+      e.preventDefault();
+  
+      {/**POST Request
+        construting object from the form field to be submitted to our API or backend
+        Need to match it up with the way the API is structured..e.g from the company object */}
+      const updatedInternship = {
+        id,
+        title,
+        type,
+        location,
+        description,
+        salary,
+        company: {
+          name: companyName,
+          description: companyDescription,
+          contactEmail,
+          contactPhone,
+        },
+      };
+  
+      updateInternshipSubmit(updatedInternship);
+  
+      toast.success('Internship Updated Successfully');
+  
+      return navigate(`/internships/${id}`);
     };
 
-    addJobSubmit(newJob);
-
-    toast.success('Job Added Successfully');
-
-    return navigate('/jobs');
-  };
 
   return (
     <section className="bg-indigo-50">
       <div className="container m-auto max-w-2xl py-24">
         <div className="bg-white px-6 py-8 mb-4 shadow-md rounded-md border m-4 md:m-0">
           <form onSubmit={submitForm}>
-            <h2 className="text-3xl text-center font-semibold mb-6">Add Job</h2>
+            <h2 className="text-3xl text-center font-semibold mb-6">Update Internship</h2>
 
             <div className="mb-4">
               <label
                 htmlFor="type"
                 className="block text-gray-700 font-bold mb-2"
               >
-                Job Type
+                Internship Type
               </label>
               <select
                 id="type"
@@ -65,16 +71,16 @@ const AddJobPage = ({addJobSubmit}) => {
                 value={type}
                 onChange={(e) => setType(e.target.value)}
               >
-                <option value="Full-Time">Full-Time</option>
-                <option value="Part-Time">Part-Time</option>
                 <option value="Remote">Remote</option>
-                <option value="Internship">Internship</option>
+                <option value="On-site">On-site</option>
+                <option value="Hybrid">Hybrid</option>
+                <option value="Project-based">Project-based</option>
               </select>
             </div>
 
             <div className="mb-4">
               <label className="block text-gray-700 font-bold mb-2">
-                Job Listing Name
+              Internship Listing Name
               </label>
               <input
                 type="text"
@@ -120,17 +126,17 @@ const AddJobPage = ({addJobSubmit}) => {
                 value={salary}
                 onChange={(e) => setSalary(e.target.value)}
               >
-                <option value="Under $50K">Under $50K</option>
-                <option value="$50K - 60K">$50K - $60K</option>
-                <option value="$60K - 70K">$60K - $70K</option>
-                <option value="$70K - 80K">$70K - $80K</option>
-                <option value="$80K - 90K">$80K - $90K</option>
-                <option value="$90K - 100K">$90K - $100K</option>
-                <option value="$100K - 125K">$100K - $125K</option>
-                <option value="$125K - 150K">$125K - $150K</option>
-                <option value="$150K - 175K">$150K - $175K</option>
-                <option value="$175K - 200K">$175K - $200K</option>
-                <option value="Over $200K">Over $200K</option>
+                <option value="Under #100,000K">Under &#8358;100,000K</option>
+                <option value="₦100,000K - ₦110,000K">₦100,000K - ₦110,000K</option>
+                <option value="₦110,000K - ₦120,000K">₦110,000K - ₦120,000K</option>
+                <option value="₦120,000K - ₦130,000K">₦120,000K - ₦130,000K</option>
+                <option value="₦130,000K - ₦140,000K">₦130,000K - ₦140,000K</option>
+                <option value="₦140,000K - ₦150,000K">₦140,000K - ₦150,000K</option>
+                <option value="₦150,000K - ₦160,000K">₦150,000K - ₦160,000K</option>
+                <option value="₦160,000K - ₦170,000K">₦160,000K - ₦170,000K</option>
+                <option value="₦170,000K - ₦180,000K">₦170,000K - ₦180,000K</option>
+                <option value="₦180,000K - ₦200,000K">₦180,000K - ₦200,000K</option>
+                <option value="Over ₦200K">Over ₦200,000K</option>
               </select>
             </div>
 
@@ -229,7 +235,7 @@ const AddJobPage = ({addJobSubmit}) => {
                 className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
                 type="submit"
               >
-                Add Job
+                Update Internship
               </button>
             </div>
           </form>
@@ -239,4 +245,4 @@ const AddJobPage = ({addJobSubmit}) => {
   );
 };
 
-export default AddJobPage;
+export default EditInternshipPage;
